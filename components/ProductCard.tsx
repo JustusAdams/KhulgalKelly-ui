@@ -3,6 +3,7 @@ import { Product } from "@/lib/products"
 import Image from "next/image"
 import Link from "next/link"
 import AddToCartButton from "./AddToCartButton"
+import Price from "@/lib/Price"
 
 const API_BASE = process.env.API_BASE
 
@@ -36,7 +37,8 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
         </Link>
-        <p className="text-stone-700 font-medium shrink-0">${product.price}</p>
+        {/* <p className="text-stone-700 font-medium shrink-0">${product.price}</p> */}
+        <Price amount={product.price} className="text-stone-700 font-medium shrink-0" /> 
       </div>
 
       <AddToCartButton product={{ ...product, image: imageUrl }} />

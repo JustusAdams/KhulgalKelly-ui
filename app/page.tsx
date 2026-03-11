@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <Hero />
       <TrustBadges />
-      <ProductGrid />
+      <ProductGrid/>
     </div>
   )
 }

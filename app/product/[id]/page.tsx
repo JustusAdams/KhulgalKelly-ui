@@ -1,4 +1,5 @@
 import { getProduct } from "@/lib/api"
+import Price from "@/lib/Price"
 import Image from "next/image"
 
 const API_BASE = process.env.API_BASE
@@ -25,9 +26,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     {product.name}
                 </h1>
 
-                <p className="text-xl mt-4">
+                {/* <p className="text-xl mt-4">
                     ${product.price}
-                </p>
+                </p> */}
+                <Price amount={product.price} className="text-xl mt-4"/>
+                
 
                 <p className="mt-6 text-gray-600">
                     {product.description}

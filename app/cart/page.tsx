@@ -2,6 +2,7 @@
 "use client"
 
 import { CartStorePrpos, useCartStore } from "@/lib/cartStore"
+import Price from "@/lib/Price"
 import { Product } from "@/lib/products"
 import Image from "next/image"
 import Link from "next/link"
@@ -54,21 +55,23 @@ export default function CartPage() {
                       </p>
                     )}
                     {/* Price shown inline on mobile */}
-                    <p className="font-serif text-stone-800 text-base mt-1 md:hidden">
+                    {/* <p className="font-serif text-stone-800 text-base mt-1 md:hidden">
                       ${Number(item.price).toFixed(2)}
-                    </p>
+                    </p> */}
+                    <Price amount={Number(item.price).toFixed(2)} className="font-serif text-stone-800 text-base mt-1 md:hidden"/>
                   </div>
 
                   {/* Price hidden on mobile, shown on md+ */}
-                  <p className="hidden md:block font-serif text-stone-800 text-lg shrink-0">
+                  {/* <p className="hidden md:block font-serif text-stone-800 text-lg shrink-0">
                     ${Number(item.price).toFixed(2)}
-                  </p>
+                  </p> */}
+                  <Price amount={Number(item.price).toFixed(2)} className="hidden md:block font-serif text-stone-800 text-lg shrink-0"/>
+
 
                   <button
                     onClick={() => removeFromCart(item.id)}
                     aria-label="Remove item"
-                    className="text-stone-300 hover:text-red-400 transition-colors duration-150 shrink-0 text-2xl leading-none"
-                  >
+                    className="text-stone-300 hover:text-red-400 transition-colors duration-150 shrink-0 text-2xl leading-none">
                     ×
                   </button>
 
@@ -79,7 +82,9 @@ export default function CartPage() {
             <div className="mt-10 border-t border-stone-200 pt-8 flex flex-col items-end gap-6">
               <div className="flex items-baseline gap-8">
                 <span className="text-xs tracking-[0.25em] uppercase text-stone-400">Total</span>
-                <span className="font-serif text-3xl text-stone-900">${total.toFixed(2)}</span>
+                {/* <span className="font-serif text-3xl text-stone-900">${total.toFixed(2)}</span> */}
+                <Price amount={Number(total.toFixed(2)).toFixed(2)} className="font-serif text-3xl text-stone-900"/>
+
               </div>
               <button className="w-full sm:w-auto bg-stone-900 text-white text-xs tracking-[0.25em] uppercase px-12 py-4 hover:bg-stone-700 transition-colors duration-200">
                 Checkout
