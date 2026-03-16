@@ -1,4 +1,5 @@
 // components/Hero.tsx
+import Image from "next/image"
 import Link from "next/link"
 
 export default function Hero() {
@@ -37,8 +38,13 @@ export default function Hero() {
         <div className="relative h-72 md:h-96 hidden sm:block">
           <div className="absolute inset-0 bg-stone-300 rounded-sm" />
           <div className="absolute -bottom-4 -right-4 w-48 h-48 bg-stone-900 rounded-sm" />
-          <div className="absolute top-8 left-8 right-8 bottom-8 bg-stone-200 rounded-sm flex items-center justify-center">
-            <p className="font-serif text-stone-400 text-xl italic">Your art here</p>
+          <div className="absolute top-8 left-8 right-8 bottom-8 bg-stone-200 rounded-sm overflow-hidden">
+            <Image
+              src="/Home_1.JPG"
+              alt="Your art"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
 
