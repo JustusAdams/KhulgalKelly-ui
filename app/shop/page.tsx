@@ -1,19 +1,25 @@
-import { getProducts } from "@/lib/api"
+import { getProducts, getCategories } from "@/lib/api"
 import ProductCard from "@/components/ProductCard"
 import PaginationControls from "@/components/PaginationControls"
+import CategoryFilter from "@/components/CategoryFilter"
 import { Product } from "@/lib/products"
 
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; perPage?: string }>
+  searchParams: Promise<{ page?: string; perPage?: string; category?: string }>
 }) {
-  const { page: pageParam, perPage: perPageParam } = await searchParams
+  const { page: pageParam, perPage: perPageParam, category } = await searchParams
 
   const page = Number(pageParam) || 1
   const perPage = Number(perPageParam) || 12
 
-  const { results: products, pagination } = await getProducts(page, perPage)
+  const [{ results: products, pagination }, categories] = await Promise.all([
+    getProducts(page, perPage, category),
+    getCategories(),
+  ])
+
+  const activeCategory = categories.find((c) => c.slug === category)
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -23,15 +29,22 @@ export default async function ShopPage({
         <div className="mb-10 md:mb-14 border-b border-stone-200 pb-8">
           <p className="text-xs tracking-[0.4em] uppercase text-stone-400 mb-2">Collection</p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <h1 className="font-serif text-4xl md:text-5xl text-stone-900">Shop Artwork</h1>
-            <p className="text-sm text-stone-400">{pagination.total} works available</p>
+            <h1 className="font-serif text-4xl md:text-5xl text-stone-900">
+              {activeCategory ? activeCategory.name : "Shop Everything"}
+            </h1>
+            <p className="text-sm text-stone-400">{pagination.total} items available</p>
           </div>
         </div>
+
+        {/* Category filter */}
+        {categories.length > 0 && (
+          <CategoryFilter categories={categories} activeSlug={category} />
+        )}
 
         {/* Grid */}
         {products.length === 0 ? (
           <div className="text-center py-32">
-            <p className="font-serif italic text-stone-400 text-xl">No artwork available yet.</p>
+            <p className="font-serif italic text-stone-400 text-xl">No items in this category yet.</p>
           </div>
         ) : (
           <>
@@ -41,7 +54,7 @@ export default async function ShopPage({
               ))}
             </div>
 
-            <PaginationControls pagination={pagination} perPage={perPage} />
+            <PaginationControls pagination={pagination} perPage={perPage} category={category} />
           </>
         )}
 

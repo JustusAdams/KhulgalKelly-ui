@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero"
 import TrustBadges from "@/components/TrustBadges"
+import CategoryShowcase from "@/components/CategoryShowcase"
 import ProductGrid from "@/components/ProductGrid"
 
 export default function Home() {
@@ -7,7 +8,8 @@ export default function Home() {
     <div>
       <Hero />
       <TrustBadges />
-      <ProductGrid/>
+      <CategoryShowcase />
+      <ProductGrid />
     </div>
   )
 }

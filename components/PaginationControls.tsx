@@ -4,12 +4,19 @@ import { PaginationMeta } from '@/lib/api'
 interface Props {
   pagination: PaginationMeta
   perPage: number
+  category?: string
 }
 
-export default function PaginationControls({ pagination, perPage }: Props) {
+export default function PaginationControls({ pagination, perPage, category }: Props) {
   const { currentPage, totalPages, total, hasNext, hasPrevious } = pagination
 
-  const buildUrl = (page: number) => `/shop?page=${page}&perPage=${perPage}`
+  const buildUrl = (page: number, size = perPage) => {
+    const params = new URLSearchParams()
+    params.set('page', String(page))
+    params.set('perPage', String(size))
+    if (category) params.set('category', category)
+    return `/shop?${params.toString()}`
+  }
 
   const getPageNumbers = () => {
     const delta = 2
@@ -30,7 +37,7 @@ export default function PaginationControls({ pagination, perPage }: Props) {
     <div className="flex flex-col items-center gap-4 mt-14">
 
       <p className="text-xs tracking-[0.2em] uppercase text-stone-400">
-        Page {currentPage} of {totalPages} — {total} works
+        Page {currentPage} of {totalPages} — {total} items
       </p>
 
       <div className="flex items-center gap-2">
@@ -89,7 +96,7 @@ export default function PaginationControls({ pagination, perPage }: Props) {
       <div className="flex items-center gap-3 text-xs text-stone-400 tracking-widest uppercase">
         <span>Per page:</span>
         {[12, 24, 48].map((size) => (
-          <Link key={size} href={`/shop?page=1&perPage=${size}`}
+          <Link key={size} href={buildUrl(1, size)}
             className={`transition-colors ${perPage === size ? 'text-stone-900 font-medium underline underline-offset-4' : 'hover:text-stone-600'}`}>
             {size}
           </Link>
