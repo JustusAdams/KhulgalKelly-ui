@@ -93,7 +93,7 @@ export default function ContactPage() {
       <div className="mt-16 pt-10 border-t border-stone-200 grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm text-stone-500">
         <div>
           <p className="font-semibold text-stone-900 mb-1">Email</p>
-          <p>hello@khulgalkelly.com</p>
+          <p>vidzahperfect@gmail.com</p>
         </div>
         <div>
           <p className="font-semibold text-stone-900 mb-1">Studio Hours</p>
